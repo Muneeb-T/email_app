@@ -108,7 +108,7 @@
         "start-dev": "cross-env NEUTRINOS_APP_ENV=dev npm run startserver",
         "node-dev": "cross-env NEUTRINOS_APP_ENV=dev node ./build/index.js",
         "start-prod": "cross-env NEUTRINOS_APP_ENV=prod npm run startserver",
-        "build": "cross-env NEUTRINOS_APP_ENV=prod node ./build/index.js",
+        "node-prod": "cross-env NEUTRINOS_APP_ENV=prod node ./build/index.js",
         "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
         "pm2": "tsc && pm2 start ecosystem.config.js",
         "grunt": "node node_modules/grunt/bin/grunt",
