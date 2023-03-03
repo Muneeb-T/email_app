@@ -14,6 +14,8 @@ import { Middleware } from '../middleware/Middleware'; //_splitter_
 import * as settings from '../config/config'; //_splitter_
 import log from '../utils/Logger'; //_splitter_
 import { TracerService } from '../services/TracerService'; //_splitter_
+import * as os from 'os'; //_splitter_
+import { sep } from 'path'; //_splitter_
 import { EmailOutService } from '../utils/ndefault-email/EmailOut/EmailOutService'; //_splitter_
 //append_imports_end
 export class send_email {
@@ -103,6 +105,11 @@ export class send_email {
         'pre',
         this.generatedMiddlewares
       ),
+      this.sdService.multipartParser({
+        type: 'path',
+        path: (os.homedir() + '').replace(/\\|\//g, sep),
+        options: [{ name: 'file', maxCount: 1 }],
+      }),
 
       async (req, res, next) => {
         let bh: any = {};
@@ -114,7 +121,7 @@ export class send_email {
             next
           );
           let parentSpanInst = null;
-          bh = await this.sendEmail(bh, parentSpanInst);
+          bh = await this.setFileData(bh, parentSpanInst);
           //appendnew_next_sd_fNYxxQF6t2S9QQv3
         } catch (e) {
           return await this.errorHandler(bh, e, 'sd_fNYxxQF6t2S9QQv3');
@@ -164,6 +171,33 @@ export class send_email {
 
   //appendnew_flow_send_email_start
 
+  async setFileData(bh, parentSpanInst) {
+    const spanInst = this.tracerService.createSpan(
+      'setFileData',
+      parentSpanInst
+    );
+    try {
+      const condition = bh.input?.files && bh.input?.files?.file;
+      if (!condition) {
+        throw 'file not uploaded';
+      }
+      bh.local.file = bh.input.files.file[0];
+
+      this.tracerService.sendData(spanInst, bh);
+      bh = await this.sendEmail(bh, parentSpanInst);
+      //appendnew_next_setFileData
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(
+        bh,
+        e,
+        'sd_Enwms6jMT9LvmtiB',
+        spanInst,
+        'setFileData'
+      );
+    }
+  }
+
   async sendEmail(bh, parentSpanInst) {
     const spanInst = this.tracerService.createSpan('sendEmail', parentSpanInst);
     try {
@@ -200,7 +234,14 @@ export class send_email {
           contentOptions: undefined,
           securityOptions: undefined,
           headerOptions: undefined,
-          attachments: undefined,
+          attachments: [
+            {
+              content: bh,
+              filename: bh.local.file.originalname,
+              path: bh.local.file.path,
+              encoding: 'utf8',
+            },
+          ],
         }
       );
       this.tracerService.sendData(spanInst, bh);
