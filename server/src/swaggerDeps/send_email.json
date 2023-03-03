@@ -11,5 +11,18 @@
                 "send_email"
             ]
         }
+    },
+    "/": {
+        "get": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "send_email"
+            ]
+        }
     }
 }

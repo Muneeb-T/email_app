@@ -126,6 +126,38 @@ export class send_email {
         this.generatedMiddlewares
       )
     );
+
+    this.app['get'](
+      `${this.serviceBasePath}/`,
+      cookieParser(),
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'pre',
+        this.generatedMiddlewares
+      ),
+
+      async (req, res, next) => {
+        let bh: any = {};
+        try {
+          bh = this.sdService.__constructDefault(
+            { local: {}, input: {} },
+            req,
+            res,
+            next
+          );
+          let parentSpanInst = null;
+          await this.sd_HTtAhX5ohKdWfnHe(bh, parentSpanInst);
+          //appendnew_next_sd_ULuZc8k435fVOjx0
+        } catch (e) {
+          return await this.errorHandler(bh, e, 'sd_ULuZc8k435fVOjx0');
+        }
+      },
+      this.sdService.getMiddlesWaresBySequenceId(
+        null,
+        'post',
+        this.generatedMiddlewares
+      )
+    );
     //appendnew_flow_send_email_HttpIn
   }
   //   service flows_send_email
@@ -203,6 +235,16 @@ export class send_email {
       return bh;
     } catch (e) {
       return await this.errorHandler(bh, e, 'sd_2YcPTz9ZZMFy1gsP');
+    }
+  }
+
+  async sd_HTtAhX5ohKdWfnHe(bh, parentSpanInst) {
+    try {
+      bh.web.res.status(200).send('hello');
+
+      return bh;
+    } catch (e) {
+      return await this.errorHandler(bh, e, 'sd_HTtAhX5ohKdWfnHe');
     }
   }
 
