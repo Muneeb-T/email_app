@@ -1,0 +1,13 @@
+{
+    "displayName": "SendEmailAPI",
+    "appName": "sendemailapi",
+    "description": "This is frontend for send email app",
+    "lastModified": "2023-03-03T05:15:36.806Z",
+    "imgSourcePath": "",
+    "version": "1.0.0",
+    "appType": "apiOnly",
+    "templateName": "blank",
+    "createDate": "2023-03-03T05:14:24.376Z",
+    "analyticsId": "6c29785d-f2d3-8a74-6c62-46e4c90753f3",
+    "createdStudioVersion": "9.1.1"
+}
