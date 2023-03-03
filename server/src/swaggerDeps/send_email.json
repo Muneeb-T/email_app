@@ -1,0 +1,15 @@
+{
+    "/send-email": {
+        "post": {
+            "summary": "",
+            "description": "",
+            "consumes": [],
+            "produces": [],
+            "parameters": [],
+            "responses": {},
+            "tags": [
+                "send_email"
+            ]
+        }
+    }
+}
